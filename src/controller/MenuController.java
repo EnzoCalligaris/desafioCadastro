@@ -3,6 +3,7 @@ package controller;
 import model.Pet;
 import model.SexoPet;
 import model.TipoPet;
+import util.ArmazenamentoInfo;
 import util.FormularioUtil;
 import util.Validador;
 
@@ -48,7 +49,7 @@ public class MenuController {
 
             } catch (InputMismatchException e) {
                 System.out.println("⚠ Entrada inválida! Digite apenas números.");
-                scanner.nextLine(); // limpa o buffer
+                scanner.nextLine();
             }
         }
     }
@@ -81,6 +82,7 @@ public class MenuController {
 
             System.out.println("Idade do Pet: ");
             int idade = Validador.validarIdade(scanner.nextDouble());
+            scanner.nextLine();
 
             System.out.println("Nome da cidade: ");
             String cidade = scanner.nextLine();
@@ -95,6 +97,7 @@ public class MenuController {
 
             Pet pet = new Pet(nome, tipo, sexo, endereco, idade, peso, raca);
             pets.add(pet);
+            ArmazenamentoInfo.salvarPet(pet);
         }
         catch (Exception e){
             System.out.println("Erro no cadastro: " + e.getMessage());
