@@ -12,6 +12,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class MenuController {
     private List<Pet> pets = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
@@ -42,8 +43,8 @@ public class MenuController {
                     case 1 -> mostrarFormulario();
                     case 2 -> System.out.println("👉 [Alterar Pet]");
                     case 3 -> System.out.println("👉 [Deletar Pet]");
-                    case 4 -> System.out.println("👉 [Listar Pets]");
-                    case 5 -> System.out.println("👉 [Listar por critério]");
+                    case 4 -> listarPets();
+                    case 5 -> buscarPetsPorCriterio();
                     case 6 -> System.out.println("👋 Saindo do sistema...");
                 }
 
@@ -110,5 +111,54 @@ public class MenuController {
             return;
         }
         pets.forEach(System.out::println);
+    }
+
+    private void buscarPetsPorCriterio() {
+        if (pets.isEmpty()) {
+            System.out.println("⚠ Nenhum pet cadastrado!");
+            return;
+        }
+
+        System.out.println("\n===== Buscar Pets por Critério =====");
+        System.out.println("Opções: nome, sexo, idade, peso, raca, endereco");
+        System.out.print("Digite o critério: ");
+        String criterio = scanner.nextLine().toLowerCase();
+
+        System.out.print("Digite o valor a buscar: ");
+        String valor = scanner.nextLine().toLowerCase();
+
+        List<Pet> resultados = new ArrayList<>();
+
+        for (Pet pet : pets) {
+            if (verificarCriterio(pet, criterio, valor)) {
+                resultados.add(pet);
+            }
+        }
+
+        if (resultados.isEmpty()) {
+            System.out.println("⚠ Nenhum pet encontrado com " + criterio + " = " + valor);
+        } else {
+            System.out.println("\n🐾 Pets encontrados:");
+            resultados.forEach(System.out::println);
+        }
+    }
+
+    private boolean verificarCriterio(Pet pet, String criterio, String valor) {
+        switch (criterio) {
+            case "nome":
+                return pet.getNome().toLowerCase().contains(valor);
+            case "sexo":
+                return pet.getSexo().name().toLowerCase().equals(valor);
+            case "idade":
+                return String.valueOf(pet.getIdade()).equals(valor);
+            case "peso":
+                return String.valueOf(pet.getPeso()).equals(valor);
+            case "raca":
+                return pet.getRaca().toLowerCase().contains(valor);
+            case "endereco":
+                return pet.getEndereco().toLowerCase().contains(valor);
+            default:
+                return false;
+        }
     }
 }
