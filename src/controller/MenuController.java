@@ -30,6 +30,7 @@ public class MenuController {
 
             try {
                 opcao = scanner.nextInt();
+                scanner.nextLine();
 
                 if (opcao < 1 || opcao > 6) {
                     System.out.println("⚠ Opção inválida! Digite um número entre 1 e 6.");
@@ -58,11 +59,12 @@ public class MenuController {
         for (String pergunta : perguntas) {
             System.out.println(pergunta);
         }
+        cadastrarPet();
     }
 
     public void cadastrarPet(){
         try {
-            System.out.println("Digite o nome e o sobrenome do Pet: ");
+            System.out.println("\nDigite o nome e o sobrenome do Pet: ");
             String nome = Validador.validarNome(scanner.nextLine());
 
             System.out.println("Tipo do Pet (CACHORRO/GATO):");
